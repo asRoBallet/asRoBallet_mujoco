@@ -1,6 +1,6 @@
 # asRoBallet MuJoCo
 
-This work presents **asRoBallet**, a holistic system that overcomes the historical barriers to deploying reinforcement learning on underactuated spherical robots. By closing the *Reality Gap* inherent in the complex tribology of wheel-sphere-ground interactions, we, to the best of our knowledge, achieved the *first* end-to-end RL locomotion policy deployed on a humanoid ballbot hardware platform. This work has been accepted for publication at Robotics: Science and Systems 2026 in Sydney, Australia. Please refer to the end of the page to cite this work.
+This work presents **asRoBallet**, a holistic system that overcomes the historical barriers to deploying reinforcement learning on underactuated spherical robots. By closing the *Reality Gap* inherent in the complex tribology of wheel-sphere-ground interactions, we, to the best of our knowledge, achieved the *first* end-to-end RL locomotion policy deployed on a humanoid ballbot hardware platform. This work has been accepted for publication at Robotics: Science and Systems 2026 in Sydney, Australia. [Please refer to the end of the page to cite this work](https://arxiv.org/abs/2604.24916).
 
 ![asRoBallet](https://bionicdl.ancorasir.com/wp-content/uploads/2026/04/2026-C-RSS-asRoBallet-SummaryFigure.png)
 
