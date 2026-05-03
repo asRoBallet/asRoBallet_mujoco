@@ -1,0 +1,439 @@
+<mujoco model="asRoBallet">
+    <compiler angle="radian" />
+    <option timestep="0.002" integrator="implicitfast" impratio="10" cone="elliptic" noslip_iterations="1"/>
+
+    <default>
+        <geom rgba="0.7 0.7 0.7 1"/>
+        <default class="torso">
+            <joint damping="0.01" frictionloss="0.1" armature="0.0"/>
+            <position kp="100" dampratio="1" />
+        </default>
+        
+        <default class="wheel1">
+            <joint damping="0.007" frictionloss="0.1" armature="0.0"/>
+        </default>    
+        <default class="wheel2">
+            <joint damping="0.007" frictionloss="0.1" armature="0.0"/>
+        </default>
+        <default class="wheel3">
+            <joint damping="0.007" frictionloss="0.1" armature="0.0"/>
+        </default>
+
+        <default class="visual">
+            <geom group="1" type="mesh" contype="4" conaffinity="4"/>
+        </default>
+        <default class="rubber">
+            <geom rgba="0.2 0.2 0.2 1" condim="3" friction="1 0.005 0.0001" priority="1" solimp="0.85 0.99 0.003"/>
+        </default>
+    </default>
+
+    <contact>
+        <pair name="ball_floor" geom1="ball-v1_geom" geom2="floor" condim="6" friction="1.0 1 0.01" solimp="0.85 0.99 0.003" />
+    </contact>
+
+    <asset>
+        <texture type="skybox" builtin="flat" rgb1="1 1 1" rgb2="1 1 1" width="256" height="256"/>
+
+        <mesh name="base_new-v7" file="meshes/base_new-v7.stl" scale="0.001 0.001 0.001" />
+        <mesh name="chest_new-v2" file="meshes/chest_new-v2.stl" scale="0.001 0.001 0.001" />
+        <mesh name="neck_link-v1" file="meshes/neck_link-v1.stl" scale="0.001 0.001 0.001" />
+        <mesh name="head_link-v2" file="meshes/head_link-v2.stl" scale="0.001 0.001 0.001" />
+
+        <mesh name="LeftUpperArm" file="meshes/LeftUpperArm.stl" scale="0.001 0.001 0.001" />
+        <mesh name="RightShoulder-v3" file="meshes/RightShoulder-v3.stl" scale="0.001 0.001 0.001" />
+        <mesh name="RightUpperArm-v2" file="meshes/RightUpperArm-v2.stl" scale="0.001 0.001 0.001" />
+        <mesh name="RightCenterArm-v2" file="meshes/RightCenterArm-v2.stl" scale="0.001 0.001 0.001" />
+        <mesh name="RightLowerArm-v4" file="meshes/RightLowerArm-v4.stl" scale="0.001 0.001 0.001" />
+        <mesh name="LeftCenterArm" file="meshes/LeftCenterArm.stl" scale="0.001 0.001 0.001" />
+        <mesh name="LeftLowerArm" file="meshes/LeftLowerArm.stl" scale="0.001 0.001 0.001" />
+        <mesh name="LeftShoulder" file="meshes/LeftShoulder.stl" scale="0.001 0.001 0.001" />
+        <mesh name="ball-v1" file="meshes/ball-v1.stl" scale="0.001 0.001 0.001" />
+        <mesh name="RightHand-v1" file="meshes/RightHand-v1.stl" scale="0.001 0.001 0.001" />
+        <mesh name="LeftHand-v1" file="meshes/LeftHand-v1.stl" scale="0.001 0.001 0.001" />
+
+        <mesh name="Axle-v3" file="meshes/Axle-v3.stl" scale="0.001 0.001 0.001" />
+        <mesh name="FatRoller1_1" file="meshes/FatRoller1_1.stl" scale="0.001 0.001 0.001" />
+        <mesh name="FatRoller1_2" file="meshes/FatRoller1_2.stl" scale="0.001 0.001 0.001" />
+        <mesh name="FatRoller1_3" file="meshes/FatRoller1_3.stl" scale="0.001 0.001 0.001" />
+        <mesh name="FatRoller1_4" file="meshes/FatRoller1_4.stl" scale="0.001 0.001 0.001" />
+        <mesh name="FatRoller1_5" file="meshes/FatRoller1_5.stl" scale="0.001 0.001 0.001" />
+        <mesh name="FatRoller1_6" file="meshes/FatRoller1_6.stl" scale="0.001 0.001 0.001" />
+        <mesh name="ThinRoller1_1" file="meshes/ThinRoller1_1.stl" scale="0.001 0.001 0.001" />
+        <mesh name="ThinRoller1_2" file="meshes/ThinRoller1_2.stl" scale="0.001 0.001 0.001" />
+        <mesh name="ThinRoller1_3" file="meshes/ThinRoller1_3.stl" scale="0.001 0.001 0.001" />
+        <mesh name="ThinRoller1_4" file="meshes/ThinRoller1_4.stl" scale="0.001 0.001 0.001" />
+        <mesh name="ThinRoller1_5" file="meshes/ThinRoller1_5.stl" scale="0.001 0.001 0.001" />
+        <mesh name="ThinRoller1_6" file="meshes/ThinRoller1_6.stl" scale="0.001 0.001 0.001" />
+        <mesh name="FatRoller2_1" file="meshes/FatRoller2_1.stl" scale="0.001 0.001 0.001" />
+        <mesh name="FatRoller2_2" file="meshes/FatRoller2_2.stl" scale="0.001 0.001 0.001" />
+        <mesh name="FatRoller2_3" file="meshes/FatRoller2_3.stl" scale="0.001 0.001 0.001" />
+        <mesh name="FatRoller2_4" file="meshes/FatRoller2_4.stl" scale="0.001 0.001 0.001" />
+        <mesh name="FatRoller2_5" file="meshes/FatRoller2_5.stl" scale="0.001 0.001 0.001" />
+        <mesh name="FatRoller2_6" file="meshes/FatRoller2_6.stl" scale="0.001 0.001 0.001" />
+        <mesh name="ThinRoller2_1" file="meshes/ThinRoller2_1.stl" scale="0.001 0.001 0.001" />
+        <mesh name="ThinRoller2_2" file="meshes/ThinRoller2_2.stl" scale="0.001 0.001 0.001" />
+        <mesh name="ThinRoller2_3" file="meshes/ThinRoller2_3.stl" scale="0.001 0.001 0.001" />
+        <mesh name="ThinRoller2_4" file="meshes/ThinRoller2_4.stl" scale="0.001 0.001 0.001" />
+        <mesh name="ThinRoller2_5" file="meshes/ThinRoller2_5.stl" scale="0.001 0.001 0.001" />
+        <mesh name="ThinRoller2_6" file="meshes/ThinRoller2_6.stl" scale="0.001 0.001 0.001" />
+        <mesh name="FatRoller3_1" file="meshes/FatRoller3_1.stl" scale="0.001 0.001 0.001" />
+        <mesh name="FatRoller3_2" file="meshes/FatRoller3_2.stl" scale="0.001 0.001 0.001" />
+        <mesh name="FatRoller3_3" file="meshes/FatRoller3_3.stl" scale="0.001 0.001 0.001" />
+        <mesh name="FatRoller3_4" file="meshes/FatRoller3_4.stl" scale="0.001 0.001 0.001" />
+        <mesh name="FatRoller3_5" file="meshes/FatRoller3_5.stl" scale="0.001 0.001 0.001" />
+        <mesh name="FatRoller3_6" file="meshes/FatRoller3_6.stl" scale="0.001 0.001 0.001" />
+        <mesh name="ThinRoller3_1" file="meshes/ThinRoller3_1.stl" scale="0.001 0.001 0.001" />
+        <mesh name="ThinRoller3_2" file="meshes/ThinRoller3_2.stl" scale="0.001 0.001 0.001" />
+        <mesh name="ThinRoller3_3" file="meshes/ThinRoller3_3.stl" scale="0.001 0.001 0.001" />
+        <mesh name="ThinRoller3_4" file="meshes/ThinRoller3_4.stl" scale="0.001 0.001 0.001" />
+        <mesh name="ThinRoller3_5" file="meshes/ThinRoller3_5.stl" scale="0.001 0.001 0.001" />
+        <mesh name="ThinRoller3_6" file="meshes/ThinRoller3_6.stl" scale="0.001 0.001 0.001" />
+
+        <texture name="grid" type="2d" builtin="checker" width="512" height="512"
+                 rgb1="0.8 0.8 0.8" rgb2="0.05 0.6 1"/>
+        <texture name="grid_ball" type="2d" builtin="checker" width="512" height="512" rgb1="1 0 0" rgb2="0 1 0"/>
+        <material name="floor_mat" shininess="1" specular="1" texture="grid" texrepeat="20 20"/>
+        <material name="ball_mat" texture="grid_ball" rgba="1 0 0 1"/>
+        <material name="body_mat" rgba="0.5 0.5 0.5 1"/>
+    </asset>
+
+    <worldbody>
+        <light directional="true" pos="-0.5 0.5 3" dir="0 0 -1" />
+        <geom name="floor" type="plane" pos="0 0 0" size="5 5 0.1" material="floor_mat" rgba="1 1 1 1" contype="7" conaffinity="7"/>
+
+        <body name="base_new-v7" pos="0.0 0.0 0.1111" euler="-0.0 0.0 -0.0">
+            <freejoint/>
+
+            <geom class="visual" name="base_new-v7_geom" type="mesh" mesh="base_new-v7" pos="0 0 0" euler="0 0 0" />
+            <inertial mass="4.8833491952093615" pos="0.002877142611364894 0.0004304927756562858 0.26369851292018004" fullinertia="0.06026042259145148 0.059947763068358306 0.023961590336546337 -1.4986061024625154e-05 -0.0009871679684399044 -6.292837602434899e-05" />
+            <body name="chest_new-v2" pos="-3.583106902738109e-08 -1.526772356719164e-07 0.4400003721030327" euler="-1.0566316098282747e-12 9.494365318636049e-11 -8.99620797088379e-16">
+                <geom class="visual" name="chest_new-v2_geom" type="mesh" mesh="chest_new-v2" pos="0 0 0" euler="0 0 0" />
+                <inertial mass="3.2042605310287064" pos="-1.6013326371601945e-05 -1.0744270105157319e-05 0.34937362535593" fullinertia="0.06334146895523768 0.04663263530859074 0.02111375962377963 -1.1009513608811435e-05 0.00037934627063380277 5.775288224710326e-07" />
+
+                <body name="Neck" pos="-2.0738965930591334e-15 -8.215650382226159e-16 0.4740000000000006" euler="6.050651873526047e-16 -9.494337381888174e-11 4.9303806576312953e-32">
+                    <joint class="torso" name="neck_joint" type="hinge" axis="-1.1750542820509288e-48 -1.0566316098282864e-12 1.0" pos="3.578606780966733e-08 1.5267673565049155e-07 -3.7210303283058933e-07" />
+                    <geom class="visual" name="neck_link-v1_geom" type="mesh" mesh="neck_link-v1" pos="0 0 0" euler="0 0 0" />
+                    <inertial mass="0.6024876453871971" pos="-0.0006047734094668232 0.005373207603459829 0.04072295517902659" fullinertia="0.0005387498816373792 0.0006647047803757507 0.0003746653098801926 -1.2150198739273867e-06 1.964598514418685e-06 -6.496444910251773e-05" />
+                    <body name="Head" pos="-1.3529108389143118e-15 -2.022304747978116e-15 0.05199999999999918" euler="1.5707963267948966 -0.0 0.0">
+                        <joint class="torso" name="head_joint" type="hinge" axis="1.2246467989365425e-16 -1.0566316098282864e-12 1.0" pos="3.5786069164782536e-08 -3.7210305107280217e-07 0.01799984732331727" />
+                        <geom class="visual"name="head_link-v2_geom" type="mesh" mesh="head_link-v2" pos="0 0 0" euler="0 0 0" rgba="0.4 0.4 0.4 1"/>
+                        <inertial mass="0.41566857186457795" pos="0.05151482658154114 0.09721120269673268 0.0011638699723890307" fullinertia="0.0016807421181515014 0.0009385707505779181 0.0011870976231925469 -0.0004216047607379162 9.920403095927295e-06 1.0995743528604151e-05" />
+                    </body>
+                </body>
+
+                <body name="RightShoulder-v3" pos="7.880515923386301e-11 -0.15900000000000022 0.38999999999926555" euler="1.5707963267948966 5.551117636150458e-17 3.14159265349485">
+                    <joint class="torso" name="chest_new-v2_right-chest-joint" type="hinge" axis="-5.229490768723123e-15 1.0564686627934729e-12 0.9999999999999986" pos="-3.5715236057100657e-08 3.7210246605495306e-07 -1.5267682362857712e-07" />
+                    <geom name="RightShoulder-v3_geom" type="mesh" mesh="RightShoulder-v3" pos="0 0 0" euler="0 0 0" />
+                    <inertial mass="0.4285978598682473" pos="0.003505685085332274 -0.0009649463575983792 0.049736444711587134" fullinertia="0.0003819136709191208 0.00028870719594379344 0.0002700883799329209 2.569041163749673e-07 -7.1528100931990905e-06 -7.03824900046054e-07" />
+                    <body name="RightUpperArm-v2" pos="-0.01800000000002181 -4.6895820560166614e-15 0.05199999999996575" euler="-3.1414470183433973 -1.5707963267948715 0">
+                        <joint class="torso" name="RightShoulder-v3_Right-Upper-Joint" type="hinge" axis="2.711430793285907e-14 1.8991298591658374e-10 0.9999999999999979" pos="1.5262259706955154e-07 -3.7212133891705357e-07 3.5715214339342907e-08" />
+                        <geom name="RightUpperArm-v2_geom" type="mesh" mesh="RightUpperArm-v2" pos="0 0 0" euler="0 0 0" />
+                        <inertial mass="0.45915238056305535" pos="1.3248937167088766e-05 -0.10266846978482512 -0.018934640249480782" fullinertia="0.0006157225955258295 0.0003695867432090844 0.0005908979815808827 -8.182833328113737e-08 -3.615668530164597e-08 -1.6969745474910944e-06" />
+                        <body name="RightCenterArm-v2" pos="9.947598300641404e-16 -0.1339999999999988 -0.01799999999999635" euler="-1.5707963267948968 2.848199107119386e-16 -0.014049767355305368">
+                            <joint class="torso" name="RightUpperArm-v2_Right-Center-Joint" type="hinge" axis="3.6472029783408554e-07 4.934642048619515e-09 -1.0000000106579454" pos="-3.619625036018377e-07 -4.083001042500649e-08 -3.7347078341206904e-07" />
+                            <geom name="RightCenterArm-v2_geom" type="mesh" mesh="RightCenterArm-v2" pos="0 0 0" euler="0 0 0" />
+                            <inertial mass="0.4627321597115143" pos="-0.0032318022104478906 0.0008971467713066424 -0.11620381533908274" fullinertia="0.0006472698239839158 0.0005549860122955702 0.0002798972276099853 4.2876085998658637e-07 -1.6591634864225007e-05 2.0690003004398844e-06" />
+                            <body name="RightLowerArm-v4" pos="-0.026500000000000024 7.105427357601002e-17 -0.12499999999999752" euler="1.5707963267948966 -1.5707963267948966 0">
+                                <joint class="torso" name="RightCenterArm-v2_right-lower-joint" type="hinge" axis="-3.0098568116255055e-07 3.79174188707489e-07 -0.999999702758837" pos="1.4530880042136023e-07 3.944627743575784e-09 -0.044500211936669455" />
+                                <geom name="RightLowerArm-v4_geom" type="mesh" mesh="RightLowerArm-v4" pos="0 0 0" euler="0 0 0" />
+                                <inertial mass="0.08452681925222644" pos="6.934639914858259e-05 -0.08172742465548671 -0.025914522400918908" fullinertia="0.0004279848217195866 3.408997211901345e-05 0.00041472968847609343 8.401005656011925e-08 3.431459774458294e-09 -1.0721818519439943e-06" />
+                                <body name="RightHand-v1" pos="1.0952205253822456e-11 -0.23799999999422292 -0.026500000000151153" euler="-6.551632608826924e-13 -1.688212125703952e-15 3.1415926535423346">
+                                    <geom name="RightHand-v1_geom" type="mesh" mesh="RightHand-v1" pos="0 0 0" euler="0 0 0" rgba="1 0.55 0 1"/>
+                                    <inertial mass="0.32306793312334026" pos="-0.0001251100633479846 0.031674350654437446 -9.414341207925266e-06" fullinertia="0.0003573077261527255 0.00014447681600812516 0.00035617212581479194 -1.4387191956913772e-06 -2.7781773324038687e-09 -2.3892270380463364e-10" />
+                                </body>
+                            </body>
+                        </body>
+                    </body>
+                </body>
+
+                <body name="LeftShoulder" pos="7.880096516940575e-11 0.1589999999999999 0.3899999999992672" euler="1.5707963267948966 5.551117636149602e-17 3.14159265349485">
+                    <joint class="torso" name="chest_new-v2_left-chest-joint" type="hinge" axis="8.615670993829587e-15 -1.0555691272973827e-12 -0.9999999999999927" pos="-3.571523996508482e-08 3.721021315447537e-07 -1.526768238783764e-07" />
+                    <geom name="LeftShoulder_geom" type="mesh" mesh="LeftShoulder" pos="0 0 0" euler="0 0 0" />
+                    <inertial mass="0.4197959811631081" pos="0.0035384206192171585 -0.0009723304030080683 -0.04969031263638524" fullinertia="0.00037901241639053086 0.0002851020968677952 0.0002663545154567517 1.6519498205799339e-07 7.188592816542836e-06 6.633548469678231e-07" />
+                    <body name="LeftUpperArm" pos="-0.018000000000019438 1.0942358130705543e-14 -0.05200000000003378" euler="3.141592653589753 1.5707963267948728 0">
+                        <joint class="torso" name="LeftShoulder_Left-Upper-Joint" type="hinge" axis="-4.50784559420354e-15 1.8991181863199382e-10 -0.9999999999999952" pos="-1.5267679057170133e-07 -3.7209864788694087e-07 -3.571522064332715e-08" />
+                        <geom name="LeftUpperArm_geom" type="mesh" mesh="LeftUpperArm" pos="0 0 0" euler="0 0 0" />
+                        <inertial mass="0.4591563607035851" pos="1.3248557467436478e-05 -0.10266813509206693 0.01893447164453624" fullinertia="0.0006157300498297808 0.0003695882094108502 0.0005909038210817636 -8.182180627285934e-08 3.6157425430950826e-08 1.6999368327280155e-06" />
+                        <body name="LeftCenterArm" pos="1.9184653865522706e-15 -0.1340000000000002 0.017999999999995856" euler="1.5707963267948981 9.696824049070706e-18 3.3306690738755357e-16">
+                            <joint class="torso" name="LeftUpperArm_Left-Center-Joint" type="hinge" axis="-1.098109319175846e-12 -1.8991042360143466e-10 0.9999999999999948" pos="-1.526769392305643e-07 -3.574066460082438e-08 3.721020667077178e-07" />
+                            <geom name="LeftCenterArm_geom" type="mesh" mesh="LeftCenterArm" pos="0 0 0" euler="0 0 0" />
+                            <inertial mass="0.4627321597109813" pos="-0.003231802210433164 0.0008971467713037894 0.11620381533907607" fullinertia="0.0006472698239836216 0.0005549860122952854 0.0002798972276098111 4.2876085992453236e-07 1.6591634864203544e-05 -2.0690003005023954e-06" />
+                            <body name="LeftLowerArm" pos="-0.026499999999997605 1.2720214370888364e-16 0.12499999999999772" euler="-1.5707963267948968 1.5707963267948961 0">
+                                <joint class="torso" name="LeftCenterArm_left-lower-joint" type="hinge" axis="2.1208662997641735e-15 -1.0953994114145601e-12 0.9999999999999881" pos="3.576440351500184e-08 -3.7210208925172396e-07 0.044499847322920755" />
+                                <geom name="LeftLowerArm_geom" type="mesh" mesh="LeftLowerArm" pos="0 0 0" euler="0 0 0" />
+                                <inertial mass="0.08453041843930957" pos="6.934344325244681e-05 -0.08172687449658551 0.025915374120674465" fullinertia="0.0004279867855385823 3.4091306746516354e-05 0.00041473029441314467 8.401328237431408e-08 -3.4264570964520417e-09 1.0712537792985215e-06" />
+                                <body name="LeftHand-v1" pos="-2.6639014921085813e-15 -0.23799999999999813 0.02650000000000418" euler="-3.1415926535897785 -6.106226635438466e-16 -8.221076097497366e-15">
+                                    <geom name="LeftHand-v1_geom" type="mesh" mesh="LeftHand-v1" pos="0 0 0" euler="0 0 0" rgba="1 0.55 0 1"/>
+                                    <inertial mass="0.32306793312334026" pos="-0.00012511006334796197 0.031674350654437196 -9.414341207830834e-06" fullinertia="0.0003573077261527155 0.00014447681600812537 0.00035617212581479335 -1.4387191956909133e-06 -2.7781773234795452e-09 -2.389226965020442e-10" />
+                                </body>
+                            </body>
+                        </body>
+                    </body>
+                </body>
+            </body>
+
+            <!-- add imu site -->
+            <site name="imu_site" pos="0.005 -0.017 0.272" size="0.01"/>
+            <site name="iphone_site" pos="0.035 0 0.47" size="0.01"/>
+            <site name="ball_site" pos="0 0 0" size="0.01"/>
+
+            <body name="Axle-v3-1" pos="0.1157533800802429 -1.3766765505351941e-15 0.11745" euler="2.7084094912294496e-14 -0.7853981633974256 1.2246467991473774e-16">
+                <joint class="wheel1" name="Base_Body-Wheel-1" type="hinge" axis="2.275957200481571e-14 -1.9151353101147832e-14 -1.0000003094489522" pos="-3.2350494513777583e-07 1.753955935299742e-15 0.019700208933546823" />
+                <geom name="Axle-v3-1_geom" type="mesh" mesh="Axle-v3" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                <inertial mass="0.10506991791855605" pos="-2.1583493305773332e-05 4.077408145059145e-06 0.003090039598495721" fullinertia="3.2105747640241144e-05 3.2105951482527904e-05 5.521081409391253e-05 2.295455390607457e-11 9.296983099549901e-10 -1.7563234047730653e-10" />
+                
+                <body name="FatRoller1_1" pos="0.037167916479206725 -0.009907546578097016 -0.0015000000000000746" euler="-3.1009960961728476e-15 9.992007221626405e-16 -1.8376942310901978">
+                    <joint name="Axle-v3_Wheel-1-FatRoller-1" type="hinge" axis="1.0000004314668323 -3.810344848809155e-07 9.242606680004428e-15" pos="-0.0038395070036022863 6.684001964667868e-08 -2.6657998715049706e-07" />
+                    <geom name="FatRoller1_1_geom" type="mesh" mesh="FatRoller1_1" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                    <inertial mass="0.01599999681958244" pos="-1.2282144226933752e-10 -3.653309616485502e-13 3.5044306668461707e-13" fullinertia="1.3434103183280375e-06 1.1614274925231364e-06 1.1614274633226901e-06 -6.371912071871828e-15 2.399784629403322e-17 -3.8963515573697816e-20" />
+                </body>
+                <body name="FatRoller1_2" pos="0.010003771213793797 -0.03714213316577985 -0.0014999999999999682" euler="3.490888486934028e-15 5.551115123125783e-16 -2.8848917822867963">
+                    <joint name="Axle-v3_Wheel-1-FatRoller-2" type="hinge" axis="1.0000001399094895 5.24952377678467e-08 -1.6708856520608606e-14" pos="-0.003839664438273287 -2.866457979861089e-07 -2.665799872692172e-07" />
+                    <geom name="FatRoller1_2_geom" type="mesh" mesh="FatRoller1_2" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                    <inertial mass="0.01599999681958244" pos="-1.228214454851237e-10 -3.653307060101461e-13 3.504383564104366e-13" fullinertia="1.343410318328083e-06 1.161427492523178e-06 1.161427463322756e-06 -6.371904342696185e-15 2.3975373451151378e-17 6.723324018831009e-21" />
+                </body>
+                <body name="FatRoller1_3" pos="-0.027164145265412953 -0.027234586587682814 -0.0014999999999999504" euler="-9.523305235690114e-17 -1.6653345369377365e-16 2.3510959736961934">
+                    <joint name="Axle-v3_Wheel-1-FatRoller-3" type="hinge" axis="0.9999999102404088 -4.167656920683882e-07 -2.942091015256665e-14" pos="-0.0038402601569902496 1.8462020800113707e-07 4.4052679291678616e-07" />
+                    <geom name="FatRoller1_3_geom" type="mesh" mesh="FatRoller1_3" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                    <inertial mass="0.01599999681958244" pos="-1.228214437831105e-10 -3.6533172187898313e-13 3.504383564120005e-13" fullinertia="1.3434103183280475e-06 1.1614274925231585e-06 1.1614274633227028e-06 -6.3719133953608084e-15 2.3985590786077633e-17 -3.456953215981613e-20" />
+                </body>
+                <body name="FatRoller1_4" pos="-0.03716791647920673 0.00990754657809704 -0.001500000000000039" euler="1.7622986068463965e-15 -3.330669073875468e-16 1.3038984224995953">
+                    <joint name="Axle-v3_Wheel-1-FatRoller-4" type="hinge" axis="1.0000004314668345 -3.810344842980484e-07 -1.429412144204889e-14" pos="-0.00383949115361849 8.870937972962987e-09 4.4052679200497213e-07" />
+                    <geom name="FatRoller1_4_geom" type="mesh" mesh="FatRoller1_4" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                    <inertial mass="0.01599999681958244" pos="-1.2282144375434876e-10 -3.653297399580547e-13 3.504446367799806e-13" fullinertia="1.343410318328097e-06 1.161427492523153e-06 1.1614274633227198e-06 -6.371905454426928e-15 2.398617312122887e-17 5.082197683525802e-21" />
+                </body>
+                <body name="FatRoller1_5" pos="-0.010003771213793708 0.03714213316577981 -0.0014999999999999504" euler="-1.5587974323413976e-15 1.1102230246251563e-16 0.25670087130299574">
+                    <joint name="Axle-v3_Wheel-1-FatRoller-5" type="hinge" axis="1.000000139909489 5.249523897521424e-08 1.7708057242771247e-14" pos="-0.0038402902474978396 -1.2237586334101725e-07 -2.6657998929017004e-07" />
+                    <geom name="FatRoller1_5_geom" type="mesh" mesh="FatRoller1_5" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                    <inertial mass="0.01599999681958244" pos="-1.2282143941054357e-10 -3.6533230053912277e-13 3.504320760364013e-13" fullinertia="1.3434103183280703e-06 1.1614274925232055e-06 1.1614274633227193e-06 -6.371901378080869e-15 2.3992208230978057e-17 -2.2843419796264412e-20" />
+                </body>
+                <body name="FatRoller1_6" pos="0.027164145265413015 0.02723458658768277 -0.0015000000000001457" euler="-5.195539940547128e-15 -2.7755575615628914e-16 -0.7904966798935996">
+                    <joint name="Axle-v3_Wheel-1-FatRoller-6" type="hinge" axis="0.9999999102404084 -4.1676569303983335e-07 2.5701663020072374e-14" pos="-0.003840217879284896 2.2733123745391146e-07 -2.665799881118591e-07" />
+                    <geom name="FatRoller1_6_geom" type="mesh" mesh="FatRoller1_6" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                    <inertial mass="0.01599999681958244" pos="-1.2282143715582172e-10 -3.653250266645067e-13 3.504352162203041e-13" fullinertia="1.3434103183279975e-06 1.1614274925231206e-06 1.1614274633226846e-06 -6.37190397211927e-15 2.3979026280736412e-17 -3.801060350803673e-20" />
+                </body>
+                
+                <body name="ThinRoller1_1" pos="0.04144927723327917 0.011119964088225806 -0.001500000000000128" euler="9.813828595615456e-16 5.551115123125789e-16 -1.308996938995749">
+                    <joint name="Axle-v3_Wheel-1-ThinRoller-1" type="hinge" axis="-1.000000276906889 -3.622631236377405e-07 -2.5479618415147343e-14" pos="-0.012878981367297837 -4.0494389607226983e-07 -2.6657998772154634e-07" />
+                    <geom name="ThinRoller1_1_geom" type="mesh" mesh="ThinRoller1_1" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                    <inertial mass="0.008641045759381547" pos="2.7973938659258895e-12 -3.516729729968076e-13 4.600198193773652e-13" fullinertia="2.1390493200749915e-07 4.282311567841888e-07 4.282311556105352e-07 1.985615958442511e-17 -4.8889474474819784e-17 1.7155858253247802e-18" />
+                </body>
+                <body name="ThinRoller1_2" pos="0.030354810006213723 -0.030336145008410847 -0.0014999999999999148" euler="-8.424800960101163e-17 -6.106226635438362e-16 -2.3561944901923435">
+                    <joint name="Axle-v3_Wheel-1-ThinRoller-2" type="hinge" axis="-1.000000154724475 -1.5472449407805122e-07 2.1094237467877974e-15" pos="-0.012879403243135183 -4.4742260816871965e-08 -2.6657998705281044e-07" />
+                    <geom name="ThinRoller1_2_geom" type="mesh" mesh="ThinRoller1_2" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                    <inertial mass="0.008641045759381547" pos="2.7973918472757214e-12 -3.5167138512363273e-13 4.600182492848256e-13" fullinertia="2.1390493200747372e-07 4.2823115678418043e-07 4.282311556105235e-07 1.9850825923835367e-17 -4.889225049295551e-17 1.6984334081428807e-18" />
+                </body>
+                <body name="ThinRoller1_3" pos="-0.011094467227065384 -0.04145610909663657 -0.0014999999999999682" euler="-1.397591608322885e-16 -3.3306690738754726e-16 2.8797932657906435">
+                    <joint name="Axle-v3_Wheel-1-ThinRoller-3" type="hinge" axis="-1.0000003955494052 -1.5268072994789605e-07 2.653433028854124e-14" pos="-0.012879191767201734 -5.06469031110986e-07 -2.665799873936836e-07" />
+                    <geom name="ThinRoller1_3_geom" type="mesh" mesh="ThinRoller1_3" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                    <inertial mass="0.008641045759381547" pos="2.7973960312408696e-12 -3.5167270815307193e-13 4.600182492847629e-13" fullinertia="2.1390493200749823e-07 4.28231156784171e-07 4.2823115561054497e-07 1.986367700183199e-17 -4.889701505328382e-17 1.6987775152777027e-18" />
+                </body>
+                <body name="ThinRoller1_4" pos="-0.04144927723327912 -0.011119964088225772 -0.0015000000000000924" euler="-3.2104174339169655e-17 4.440892098500641e-16 1.8325957145940455">
+                    <joint name="Axle-v3_Wheel-1-ThinRoller-4" type="hinge" axis="-1.000000276906894 -3.6226312380427395e-07 2.4452662117369073e-14" pos="-0.012878813908813598 2.2001966523167715e-07 -2.665799885589841e-07" />
+                    <geom name="ThinRoller1_4_geom" type="mesh" mesh="ThinRoller1_4" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                    <inertial mass="0.008641045759381547" pos="2.797395085035419e-12 -3.516684232182252e-13 4.600245296546128e-13" fullinertia="2.139049320074888e-07 4.2823115678419467e-07 4.282311556105258e-07 1.986067599056965e-17 -4.8895102611707595e-17 1.6993863202085418e-18" />
+                </body>
+                <body name="ThinRoller1_5" pos="-0.03035481000621368 0.03033614500841084 -0.0014999999999999682" euler="-4.718447854656852e-16 -1.1102230246251565e-16 0.7853981633974474">
+                    <joint name="Axle-v3_Wheel-1-ThinRoller-5" type="hinge" axis="-1.000000154724476 -1.5472449493847407e-07 -2.7755575615628914e-15" pos="-0.012879360748213529 -8.723717866100308e-08 4.4052679160078156e-07" />
+                    <geom name="ThinRoller1_5_geom" type="mesh" mesh="ThinRoller1_5" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                    <inertial mass="0.008641045759381547" pos="2.79739628816782e-12 -3.5167582601570104e-13 4.600119689150253e-13" fullinertia="2.1390493200748076e-07 4.282311567841777e-07 4.2823115561052856e-07 1.9847953952748583e-17 -4.8890715245738614e-17 1.7038597129612285e-18" />
+                </body>
+                <body name="ThinRoller1_6" pos="0.011094467227065401 0.041456109096636495 -0.0015000000000002167" euler="2.6367796834848414e-16 -2.7755575615628914e-16 -0.26179938779914785">
+                    <joint name="Axle-v3_Wheel-1-ThinRoller-6" type="hinge" axis="-1.00000039554941 -1.5268072736662752e-07 -2.6700863742235015e-14" pos="-0.012879133718062565 -4.909148082277767e-07 4.4052679225824176e-07" />
+                    <geom name="ThinRoller1_6_geom" type="mesh" mesh="ThinRoller1_6" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                    <inertial mass="0.008641045759381547" pos="2.797389964869435e-12 -3.516743336323934e-13 4.600245296547558e-13" fullinertia="2.1390493200747684e-07 4.2823115678417614e-07 4.282311556105218e-07 1.9859699917446836e-17 -4.8899450273007174e-17 1.7036545721693154e-18" />
+                </body>
+            </body>
+
+            <body name="Axle-v3-2" pos="-0.0578766900388646 0.10024536772122485 0.11745" euler="0.7137243789447411 0.3613671239067093 6.67619064812447e-17">
+                <joint class="wheel2" name="Base_Body-Wheel-2" type="hinge" axis="3.2300292751585857e-07 -4.726020697565225e-07 -0.9999997498208049" pos="-1.8450144871227578e-07 2.260997641612139e-07 0.019699606366323983" />
+                <geom name="Axle-v3-2_geom" type="mesh" mesh="Axle-v3" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                <inertial mass="0.10506991791855605" pos="-2.1583493305759997e-05 4.077408145061268e-06 0.0030900395984957063" fullinertia="3.21057476402407e-05 3.210595148252788e-05 5.5210814093912394e-05 2.2954553904534867e-11 9.296983097322205e-10 -1.7563234043622923e-10" />
+                
+                <body name="FatRoller2_1" pos="-0.010003771213793708 0.03714213316577968 -0.0015000000000001102" euler="-2.3869795029440846e-15 -1.3877787807814444e-16 0.25670087130299485">
+                    <joint name="Axle-v3_Wheel-2-FatRoller-1" type="hinge" axis="0.9999993672267742 1.6441105241127296e-08 2.3564960266453383e-07" pos="-0.0038399063775775726 4.545179803418795e-07 1.779494115440334e-08" />
+                    <geom name="FatRoller2_1_geom" type="mesh" mesh="FatRoller2_1" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                    <inertial mass="0.01599999681958244" pos="-1.2282144610195403e-10 -3.653330035704364e-13 3.504435129243399e-13" fullinertia="1.3434103183281072e-06 1.1614274925231777e-06 1.16142746332273e-06 -6.371932625655689e-15 2.4009320943490554e-17 8.787966827763366e-21" />
+                </body>
+                <body name="FatRoller2_2" pos="0.027164145265413 0.027234586587682675 -0.0015000000000002522" euler="-5.273559366969493e-15 -3.05311331771918e-16 -0.7904966798935994">
+                    <joint name="Axle-v3_Wheel-2-FatRoller-2" type="hinge" axis="0.9999998085223989 1.4800807618398082e-07 3.7867867619389983e-07" pos="-0.0038395087849223924 -1.8848005305701753e-07 8.330874225193075e-08" />
+                    <geom name="FatRoller2_2_geom" type="mesh" mesh="FatRoller2_2" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                    <inertial mass="0.01599999681958244" pos="-1.2282144306246528e-10 -3.653322839320632e-13 3.504429002484623e-13" fullinertia="1.3434103183280773e-06 1.1614274925231646e-06 1.1614274633227464e-06 -6.371918980484304e-15 2.3982149714729412e-17 -2.6469779601696886e-22" />
+                </body>
+                <body name="FatRoller2_3" pos="0.03716791647920672 -0.009907546578097115 -0.0015000000000000746" euler="-2.9976021664879215e-15 -6.106226635438358e-16 -1.8376942310901987">
+                    <joint name="Axle-v3_Wheel-2-FatRoller-3" type="hinge" axis="0.9999997206408433 -4.37896956417827e-07 -2.1052431536938698e-07" pos="-0.0038403309948799556 2.7030504030065884e-07 -1.7276499643219256e-07" />
+                    <geom name="FatRoller2_3_geom" type="mesh" mesh="FatRoller2_3" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                    <inertial mass="0.01599999681958244" pos="-1.2282144223187583e-10 -3.65327120976856e-13 3.504387222530862e-13" fullinertia="1.3434103183280411e-06 1.1614274925232004e-06 1.1614274633227276e-06 -6.371927636102234e-15 2.3987655428886565e-17 -2.0117032497289633e-21" />
+                </body>
+                <body name="FatRoller2_4" pos="0.010003771213793778 -0.03714213316577986 -0.0014999999999999857" euler="3.4972025275692423e-15 1.1102230246251563e-16 -2.8848917822867963">
+                    <joint name="Axle-v3_Wheel-2-FatRoller-4" type="hinge" axis="0.9999993672267717 1.6441103797837364e-08 -2.3564960138777735e-07" pos="-0.0038399887457600266 2.4904530464281297e-07 2.3285554219684094e-08" />
+                    <geom name="FatRoller2_4_geom" type="mesh" mesh="FatRoller2_4" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                    <inertial mass="0.01599999681958244" pos="-1.2282144752009194e-10 -3.6532963269833146e-13 3.5043986721126594e-13" fullinertia="1.3434103183280265e-06 1.1614274925231394e-06 1.1614274633227342e-06 -6.371917008485724e-15 2.400910918525374e-17 -2.1705219273391446e-20" />
+                </body>
+                <body name="FatRoller2_5" pos="-0.027164145265412977 -0.027234586587682887 -0.0015000000000000924" euler="-6.106226635438363e-16 -5.551115123125785e-16 2.3510959736961934">
+                    <joint name="Axle-v3_Wheel-2-FatRoller-5" type="hinge" axis="0.9999998085223991 1.4800807704440366e-07 -3.786786793025243e-07" pos="-0.003839746438399527 3.337366745647047e-07 5.701441890995466e-07" />
+                    <geom name="FatRoller2_5_geom" type="mesh" mesh="FatRoller2_5" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                    <inertial mass="0.01599999681958244" pos="-1.2282144814136907e-10 -3.6533122578593136e-13 3.504389097952293e-13" fullinertia="1.3434103183280248e-06 1.1614274925231697e-06 1.1614274633227308e-06 -6.371929594865925e-15 2.4011689988764906e-17 -5.108667463127499e-21" />
+                </body>
+                <body name="FatRoller2_6" pos="-0.037167916479206635 0.009907546578096919 -0.001500000000000128" euler="2.0539125955565416e-15 8.604228440844972e-16 1.3038984224995955">
+                    <joint name="Axle-v3_Wheel-2-FatRoller-6" type="hinge" axis="0.9999997206408429 -4.378969572227387e-07 2.1052431087298373e-07" pos="-0.003840111866231747 3.017084397062813e-07 2.1384549193470374e-07" />
+                    <geom name="FatRoller2_6_geom" type="mesh" mesh="FatRoller2_6" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                    <inertial mass="0.01599999681958244" pos="-1.2282144568770917e-10 -3.6533099036334646e-13 3.50443087790754e-13" fullinertia="1.3434103183280803e-06 1.1614274925231767e-06 1.1614274633227215e-06 -6.371937006404213e-15 2.4000255043976973e-17 1.572304908340795e-20" />
+                </body>
+                
+                <body name="ThinRoller2_1" pos="-0.030354810006213737 0.03033614500841077 -0.001500000000000039" euler="-3.3306690738754765e-16 -3.608224830031766e-16 0.7853981633974526">
+                    <joint name="Axle-v3_Wheel-2-ThinRoller-1" type="hinge" axis="-1.0000002338119574 -4.4262014275986417e-08 -1.3253541567004312e-07" pos="-0.01287908325047987 3.7202429747050514e-08 2.3292559242276897e-07" />
+                    <geom name="ThinRoller2_1_geom" type="mesh" mesh="ThinRoller2_1" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                    <inertial mass="0.008641045759381547" pos="2.7973858014644244e-12 -3.51669410775582e-13 4.600202872285159e-13" fullinertia="2.139049320074649e-07 4.2823115678418737e-07 4.2823115561051623e-07 1.9855259611918652e-17 -4.889113214476734e-17 1.6956540812847025e-18" />
+                </body>
+                <body name="ThinRoller2_2" pos="0.011094467227065445 0.04145610909663642 -0.0015000000000003056" euler="1.6653345369377353e-16 -2.2204460492503136e-16 -0.26179938779914813">
+                    <joint name="Axle-v3_Wheel-2-ThinRoller-2" type="hinge" axis="-0.9999999641808336 -5.738463252358272e-07 -5.001106884172657e-08" pos="-0.012879338150266104 8.083254353320399e-08 2.410194294062175e-07" />
+                    <geom name="ThinRoller2_2_geom" type="mesh" mesh="ThinRoller2_2" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                    <inertial mass="0.008641045759381547" pos="2.7973973236997297e-12 -3.516705142124468e-13 4.600168238766288e-13" fullinertia="2.1390493200744441e-07 4.2823115678417127e-07 4.282311556105109e-07 1.985880656238528e-17 -4.890424130311508e-17 1.6878984358614053e-18" />
+                </body>
+                <body name="ThinRoller2_3" pos="0.04144927723327916 0.011119964088225655 -0.0015000000000002522" euler="-2.2204460492503136e-16 -2.2204460492503136e-16 -1.3089969389957476">
+                    <joint name="Axle-v3_Wheel-2-ThinRoller-3" type="hinge" axis="-0.9999996403629288 -7.554676163812335e-08 8.252434691158328e-08" pos="-0.012879000250591875 -7.566599799003516e-08 -3.249193059658845e-07" />
+                    <geom name="ThinRoller2_3_geom" type="mesh" mesh="ThinRoller2_3" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                    <inertial mass="0.008641045759381547" pos="2.797393911859973e-12 -3.5167256806906165e-13 4.600208700866683e-13" fullinertia="2.1390493200751345e-07 4.2823115678419266e-07 4.282311556105454e-07 1.9862502405362166e-17 -4.891202341831798e-17 1.7101363594492809e-18" />
+                </body>
+                <body name="ThinRoller2_4" pos="0.030354810006213723 -0.030336145008410906 -0.0015000000000000035" euler="3.8857805861880464e-16 3.053113317719179e-16 -2.3561944901923457">
+                    <joint name="Axle-v3_Wheel-2-ThinRoller-4" type="hinge" axis="-1.000000233811963 -4.426201383189721e-08 1.3253541561453197e-07" pos="-0.012879258014766332 -9.866876713414408e-08 -1.9184509710131956e-07" />
+                    <geom name="ThinRoller2_4_geom" type="mesh" mesh="ThinRoller2_4" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                    <inertial mass="0.008641045759381547" pos="2.7973902100519208e-12 -3.516715666774317e-13 4.600159316364936e-13" fullinertia="2.1390493200748454e-07 4.28231156784183e-07 4.282311556105274e-07 1.9864213014868926e-17 -4.889722681152063e-17 1.6992539713105333e-18" />
+                </body>
+                <body name="ThinRoller2_5" pos="-0.011094467227065433 -0.04145610909663657 -0.001500000000000039" euler="-2.220446049250314e-16 1.3877787807814464e-16 2.8797932657906453">
+                    <joint name="Axle-v3_Wheel-2-ThinRoller-5" type="hinge" axis="-0.999999964180833 -5.738463249305159e-07 5.0011069063771174e-08" pos="-0.012879307864501132 -1.3845336660446225e-07 -1.9993893379940605e-07" />
+                    <geom name="ThinRoller2_5_geom" type="mesh" mesh="ThinRoller2_5" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                    <inertial mass="0.008641045759381547" pos="2.797393370004168e-12 -3.5166992452164445e-13 4.600225351732983e-13" fullinertia="2.1390493200750135e-07 4.2823115678418345e-07 4.282311556105358e-07 1.9861526332239353e-17 -4.88858051016225e-17 1.7074596029870593e-18" />
+                </body>
+                <body name="ThinRoller2_6" pos="-0.041449277233279125 -0.011119964088225798 -0.001500000000000128" euler="-3.885780586188047e-16 6.661338147750938e-16 1.832595714594046">
+                    <joint name="Axle-v3_Wheel-2-ThinRoller-6" type="hinge" axis="-0.9999996403629298 -7.554675877236017e-08 -8.252434685607213e-08" pos="-0.012878795200540551 -1.5908071113873712e-07 3.6599980162560497e-07" />
+                    <geom name="ThinRoller2_6_geom" type="mesh" mesh="ThinRoller2_6" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                    <inertial mass="0.008641045759381547" pos="2.797392926965726e-12 -3.5168132203004217e-13 4.600239842868651e-13" fullinertia="2.139049320074826e-07 4.2823115678418625e-07 4.2823115561052655e-07 1.985919202855073e-17 -4.892065256646813e-17 1.7043295515491586e-18" />
+                </body>
+            </body>
+
+            <body name="Axle-v3-3" pos="-0.057876690039881745 -0.10024536772336548 0.1173" euler="-0.7137243789447459 0.36136712390668596 -1.483597921805425e-16">
+                <joint class="wheel3" name="Base_Body-Wheel-3" type="hinge" axis="3.2300290420117506e-07 4.7260207441945923e-07 -0.9999997498208053" pos="-1.8450174799587715e-07 -2.2609999724559904e-07 0.019699606369993957" />
+                <geom name="Axle-v3-3_geom" type="mesh" mesh="Axle-v3" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                <inertial mass="0.10506991791855605" pos="-2.1583493305771056e-05 4.077408145059316e-06 0.003090039598495702" fullinertia="3.21057476402409e-05 3.210595148252759e-05 5.521081409391253e-05 2.2954553946886514e-11 9.296983099888714e-10 -1.7563234050060373e-10" />
+                
+                <body name="FatRoller3_1" pos="0.010003771213793748 -0.03714213316577985 -0.0014999999999999326" euler="3.7747582837255346e-15 3.8857805861880504e-16 -2.884891782286796">
+                    <joint name="Axle-v3_Wheel-3-FatRoller-1" type="hinge" axis="0.99999933938668 1.7687899622753633e-07 -4.146652788361571e-07" pos="-0.003840110835318598 6.71760025510457e-08 -1.6697831295669867e-07" />
+                    <geom name="FatRoller3_1_geom" type="mesh" mesh="FatRoller3_1" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                    <inertial mass="0.01599999681958244" pos="-1.2282144735328412e-10 -3.6533269664462743e-13 3.5044235223077284e-13" fullinertia="1.3434103183279765e-06 1.1614274925231557e-06 1.1614274633226914e-06 -6.3719113307179995e-15 2.4021324988539924e-17 -3.1234339930002325e-20" />
+                </body>
+                <body name="FatRoller3_2" pos="-0.027164145265412998 -0.027234586587682835 -0.0015000000000000213" euler="-5.551115123125788e-17 -2.220446049250315e-16 2.3510959736961934">
+                    <joint name="Axle-v3_Wheel-3-FatRoller-2" type="hinge" axis="1.0000003366884302 -1.0858883617292925e-07 1.21888640097767e-07" pos="-0.0038395984882897533 -1.1987765659315659e-07 -7.428864947354487e-09" />
+                    <geom name="FatRoller3_2_geom" type="mesh" mesh="FatRoller3_2" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                    <inertial mass="0.01599999681958244" pos="-1.2282144848323775e-10 -3.653306971328147e-13 3.5043926753389026e-13" fullinertia="1.3434103183280578e-06 1.1614274925231583e-06 1.1614274633226958e-06 -6.371903230965441e-15 2.3997978642931227e-17 -4.5104504441291493e-20" />
+                </body>
+                <body name="FatRoller3_3" pos="-0.03716791647920673 0.00990754657809703 -0.001500000000000039" euler="1.9984014443252834e-15 8.32667268468868e-17 1.303898422499595">
+                    <joint name="Axle-v3_Wheel-3-FatRoller-3" type="hinge" axis="0.9999996638463136 -4.2709013468172907e-07 2.777348724336548e-07" pos="-0.003839443998737627 3.32555478827428e-07 -1.7346002499293856e-07" />
+                    <geom name="FatRoller3_3_geom" type="mesh" mesh="FatRoller3_3" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                    <inertial mass="0.01599999681958244" pos="-1.2282144561930586e-10 -3.6533365087603486e-13 3.5043625023248513e-13" fullinertia="1.3434103183280612e-06 1.1614274925231597e-06 1.161427463322704e-06 -6.371901933946241e-15 2.4006184274607753e-17 1.0574676950877906e-20" />
+                </body>
+                <body name="FatRoller3_4" pos="-0.010003771213793729 0.03714213316577983 -0.0014999999999999326" euler="-1.8318679906315095e-15 -5.551115123125786e-17 0.2567008713029959">
+                    <joint name="Axle-v3_Wheel-3-FatRoller-4" type="hinge" axis="0.9999993393866803 1.7687899761531511e-07 4.14665279890869e-07" pos="-0.003840140003360127 -1.5226176755046058e-07 2.0806614806924938e-07" />
+                    <geom name="FatRoller3_4_geom" type="mesh" mesh="FatRoller3_4" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                    <inertial mass="0.01599999681958244" pos="-1.228214435193374e-10 -3.6532920153547296e-13 3.5043945781240176e-13" fullinertia="1.343410318328027e-06 1.1614274925231426e-06 1.1614274633226749e-06 -6.3719167834925974e-15 2.3992472928774074e-17 -8.629148150153185e-21" />
+                </body>
+                <body name="FatRoller3_5" pos="0.027164145265412984 0.027234586587682772 -0.001500000000000128" euler="-5.273559366969499e-15 -8.326672684688684e-17 -0.7904966798935992">
+                    <joint name="Axle-v3_Wheel-3-FatRoller-5" type="hinge" axis="1.0000003366884298 -1.0858883675579634e-07 -1.2188864373374741e-07" pos="-0.003839423033627052 -2.5485680654421285e-07 4.851670036250602e-08" />
+                    <geom name="FatRoller3_5_geom" type="mesh" mesh="FatRoller3_5" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                    <inertial mass="0.01599999681958244" pos="-1.2282145020873183e-10 -3.653241849110429e-13 3.5044097241739433e-13" fullinertia="1.3434103183280566e-06 1.1614274925231536e-06 1.1614274633226999e-06 -6.371902278053376e-15 2.3995014027615837e-17 -6.1409888675936775e-21" />
+                </body>
+                <body name="FatRoller3_6" pos="0.03716791647920676 -0.00990754657809701 -0.0015000000000000746" euler="-3.219646771412956e-15 2.4980018054066037e-16 -1.8376942310901985">
+                    <joint name="Axle-v3_Wheel-3-FatRoller-6" type="hinge" axis="0.9999996638463138 -4.2709013449437894e-07 -2.7773487748516956e-07" pos="-0.003840609458664355 7.952485764573186e-08 1.1981351487897265e-07" />
+                    <geom name="FatRoller3_6_geom" type="mesh" mesh="FatRoller3_6" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                    <inertial mass="0.01599999681958244" pos="-1.228214386949332e-10 -3.6532457073457786e-13 3.504346818918011e-13" fullinertia="1.343410318328091e-06 1.1614274925232012e-06 1.1614274633227346e-06 -6.3719283375513936e-15 2.401550163702755e-17 -3.494010907423989e-21" />
+                </body>
+                
+                <body name="ThinRoller3_1" pos="-0.01109446722706536 -0.041456109096636495 -0.0015000000000000568" euler="-1.1102230246251573e-16 -2.2204460492503146e-16 2.879793265790645">
+                    <joint name="Axle-v3_Wheel-3-ThinRoller-1" type="hinge" axis="-1.0000000576469272 -3.7209636412349756e-07 -5.069837136217892e-08" pos="-0.012879236220750847 -3.13119038606929e-07 -1.3644928001843495e-07" />
+                    <geom name="ThinRoller3_1_geom" type="mesh" mesh="ThinRoller3_1" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                    <inertial mass="0.008641045759381547" pos="2.7973928067822175e-12 -3.516721908309314e-13 4.600195439011525e-13" fullinertia="2.139049320074999e-07 4.282311567841598e-07 4.282311556105002e-07 1.9845613031615058e-17 -4.888867045526438e-17 1.697533435636423e-18" />
+                </body>
+                <body name="ThinRoller3_2" pos="-0.041449277233279076 -0.011119964088225772 -0.001500000000000128" euler="-4.440892098500627e-16 -2.775557561562892e-16 1.8325957145940452">
+                    <joint name="Axle-v3_Wheel-3-ThinRoller-2" type="hinge" axis="-1.000000014504879 2.2662836310360923e-07 4.335127582466569e-07" pos="-0.012879357647488912 -2.3660935539364727e-07 -2.1727674929042373e-07" />
+                    <geom name="ThinRoller3_2_geom" type="mesh" mesh="ThinRoller3_2" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                    <inertial mass="0.008641045759381547" pos="2.797386351606566e-12 -3.516817277381605e-13 4.600184448452734e-13" fullinertia="2.1390493200750754e-07 4.282311567841863e-07 4.282311556105541e-07 1.9844062895147134e-17 -4.8904281007784484e-17 1.7193710038078229e-18" />
+                </body>
+                <body name="ThinRoller3_3" pos="-0.03035481000621365 0.030336145008410875 -0.0014999999999999504" euler="-1.6653345369377363e-16 5.551115123125788e-17 0.785398163397447">
+                    <joint name="Axle-v3_Wheel-3-ThinRoller-3" type="hinge" axis="-0.999999902694442 2.385559199902243e-07 -2.2289565132505018e-07" pos="-0.012878734324215126 3.677448753109866e-07 1.9853549332402715e-07" />
+                    <geom name="ThinRoller3_3_geom" type="mesh" mesh="ThinRoller3_3" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                    <inertial mass="0.008641045759381547" pos="2.7973883472322318e-12 -3.5166654856219377e-13 4.600208792439889e-13" fullinertia="2.1390493200749198e-07 4.2823115678418583e-07 4.282311556105433e-07 1.987051943985903e-17 -4.890466481958871e-17 1.7126212100093902e-18" />
+                </body>
+                <body name="ThinRoller3_4" pos="0.0110944672270654 0.04145610909663651 -0.0015000000000001635" euler="2.7755575615628933e-16 -3.6082248300317617e-16 -0.2617993877991475">
+                    <joint name="Axle-v3_Wheel-3-ThinRoller-4" type="hinge" axis="-1.0000000576469277 -3.7209636324225803e-07 5.069837143156786e-08" pos="-0.012879064088798192 1.833494921293097e-07 -5.295696656911191e-07" />
+                    <geom name="ThinRoller3_4_geom" type="mesh" mesh="ThinRoller3_4" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                    <inertial mass="0.008641045759381547" pos="2.7973947539804597e-12 -3.516790494089829e-13 4.600292357035275e-13" fullinertia="2.1390493200749783e-07 4.282311567841932e-07 4.282311556105025e-07 1.985673364777022e-17 -4.8888531488921474e-17 1.7118271166213393e-18" />
+                </body>
+                <body name="ThinRoller3_5" pos="0.041449277233279104 0.011119964088225718 -0.001500000000000128" euler="2.220446049250314e-16 -5.551115123125786e-16 -1.3089969389957476">
+                    <joint name="Axle-v3_Wheel-3-ThinRoller-5" type="hinge" axis="-1.0000000145048795 2.2662836243747542e-07 -4.335127588572796e-07" pos="-0.01287913836128406 -2.668958200865816e-07 2.5836458480369556e-07" />
+                    <geom name="ThinRoller3_5_geom" type="mesh" mesh="ThinRoller3_5" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                    <inertial mass="0.008641045759381547" pos="2.797389875643623e-12 -3.5167365413842857e-13 4.600264095282617e-13" fullinertia="2.139049320074855e-07 4.282311567841954e-07 4.282311556105261e-07 1.9860593272508394e-17 -4.888882265649709e-17 1.707750770562678e-18" />
+                </body>
+                <body name="ThinRoller3_6" pos="0.030354810006213838 -0.030336145008410816 -0.0014999999999999504" euler="-4.44089209850063e-16 -1.1102230246251575e-16 -2.356194490192345">
+                    <joint name="Axle-v3_Wheel-3-ThinRoller-6" type="hinge" axis="-0.9999999026944403 2.385559216000477e-07 2.2289565149158364e-07" pos="-0.012878969311330826 -1.556768344226564e-07 4.5492477751193916e-07" />
+                    <geom name="ThinRoller3_6_geom" type="mesh" mesh="ThinRoller3_6" pos="0 0 0" euler="0 0 0" contype="2" conaffinity="1"/>
+                    <inertial mass="0.008641045759381547" pos="2.797393398117369e-12 -3.5166974066579903e-13 4.600184798059384e-13" fullinertia="2.1390493200750823e-07 4.2823115678419875e-07 4.282311556105258e-07 1.9865873993538932e-17 -4.887943911962829e-17 1.7138388198710683e-18" />
+                </body>
+            </body>
+
+            <body name="ball-v1" pos="-0.000184 0.0 0.0027" euler="-8.758115402030124e-47 1.4886381841035652e-16 -2.7200464103316422e-15">
+                <joint name="torso_ball_joint" type="ball" pos=" 0.0  0.0  0" damping="0.01"/>
+                <geom class="rubber" name="ball-v1_geom" type="mesh" mesh="ball-v1" pos="0 0 0" euler="0 0 0" contype="3" conaffinity="3"/>
+                <inertial mass="3.021143163744471" pos="2.885352467797298e-17 2.885352467797308e-17 2.886579864025402e-17" fullinertia="0.024537068316026582 0.024537068316026783 0.024537068316026575 1.2502313135099962e-16 2.33620219102254e-17 -1.3441326783345871e-17" />
+            </body>   
+            <camera name="robot_cam" pos="-2.8 0 0.8" euler="0 -1.57 -1.57"/>         
+
+        </body>
+
+        <!-- <body name="ball-v1" pos="4.539775579063084e-17 3.9330107106101477e-16 0.1134" euler="-8.758115402030124e-47 1.4886381841035652e-16 -2.7200464103316422e-15">
+            <joint type="free" damping="0.1"/>
+            <geom class="rubber" name="ball-v1_geom" type="mesh" mesh="ball-v1" pos="0 0 0" euler="0 0 0" contype="3" conaffinity="3"/>
+            <inertial mass="3.021143163744471" pos="2.885352467797298e-17 2.885352467797308e-17 2.886579864025402e-17" fullinertia="0.024537068316026582 0.024537068316026783 0.024537068316026575 1.2502313135099962e-16 2.33620219102254e-17 -1.3441326783345871e-17" />
+        </body> -->
+
+        <!-- <camera name="robot_cam" pos="-1 0 1" euler="0 -1.57 -1.57"/> -->
+    </worldbody>
+
+    <actuator>
+        <motor name="OmniWheel-1" joint="Base_Body-Wheel-1" gear="2" forcerange="-2 2"/>
+        <motor name="OmniWheel-2" joint="Base_Body-Wheel-2" gear="2" forcerange="-2 2"/>
+        <motor name="OmniWheel-3" joint="Base_Body-Wheel-3" gear="2" forcerange="-2 2"/>
+
+        <position class="torso" name="Neck" joint="neck_joint" ctrlrange="-3.14 3.14" forcerange="-17 17"/>
+        <position class="torso" name="Head" joint="head_joint" ctrlrange="-1.5 1.5" forcerange="-17 17"/>
+
+        <position class="torso" name="RS" joint="chest_new-v2_right-chest-joint" ctrlrange="-3 3" forcerange="-17 17"/>
+        <position class="torso" name="RU" joint="RightShoulder-v3_Right-Upper-Joint" ctrlrange="-3 1" forcerange="-17 17"/>
+        <position class="torso" name="RC" joint="RightUpperArm-v2_Right-Center-Joint" ctrlrange="-3.14 3.14" forcerange="-17 17"/>
+        <position class="torso" name="RL" joint="RightCenterArm-v2_right-lower-joint" ctrlrange="-2.1 2.1" forcerange="-17 17"/>
+
+        <position class="torso" name="LS" joint="chest_new-v2_left-chest-joint" ctrlrange="-3 3" forcerange="-17 17"/>
+        <position class="torso" name="LU" joint="LeftShoulder_Left-Upper-Joint" ctrlrange="-1 3" forcerange="-17 17"/>
+        <position class="torso" name="LC" joint="LeftUpperArm_Left-Center-Joint" ctrlrange="-3.14 3.14" forcerange="-17 17"/>
+        <position class="torso" name="LL" joint="LeftCenterArm_left-lower-joint" ctrlrange="-2.1 2.1" forcerange="-17 17"/>
+    </actuator>
+
+    <sensor>
+        <jointpos name="whl_1_pos" joint="Base_Body-Wheel-1"/>
+        <jointpos name="whl_2_pos" joint="Base_Body-Wheel-2"/>
+        <jointpos name="whl_3_pos" joint="Base_Body-Wheel-3"/>
+        <jointvel name="whl_1_vel" joint="Base_Body-Wheel-1"/>
+        <jointvel name="whl_2_vel" joint="Base_Body-Wheel-2"/>
+        <jointvel name="whl_3_vel" joint="Base_Body-Wheel-3"/>
+
+        <jointactuatorfrc name="whl_1_tor" joint="Base_Body-Wheel-1"/>
+        <jointactuatorfrc name="whl_2_tor" joint="Base_Body-Wheel-2"/>
+        <jointactuatorfrc name="whl_3_tor" joint="Base_Body-Wheel-3"/>
+
+        <gyro name="imu_gyro" site="imu_site"/>
+        <velocimeter name="ball_vel" site="ball_site"/>
+        <framequat name="imu_quat" objtype="site" objname="imu_site"/>
+        <framepos name="ball_pos" objtype="site" objname="iphone_site"/> 
+    </sensor>
+
+</mujoco>
