@@ -1,8 +1,27 @@
 # asRoBallet MuJoCo
 
-`asRoBallet_mujoco` is a MuJoCo-based reinforcement learning project for a ballbot-style robot with an omni-wheel drive mechanism. The repository contains the robot model, mesh assets, two Gymnasium environments, and a shared PPO training entry point.
+This work presents **asRoBallet**, a holistic system that overcomes the historical barriers to deploying reinforcement learning on underactuated spherical robots. By closing the *Reality Gap* inherent in the complex tribology of wheel-sphere-ground interactions, we, to the best of our knowledge, achieved the *first* end-to-end RL locomotion policy deployed on a humanoid ballbot hardware platform. This work has been accepted for publication at Robotics: Science and Systems 2026 in Sydney, Australia. Please refer to the end of the page to cite this work.
+
+![asRoBallet](https://bionicdl.ancorasir.com/wp-content/uploads/2026/04/2026-C-RSS-asRoBallet-SummaryFigure.png)
+
+`asRoBallet_mujoco` is a MuJoCo-based reinforcement learning project for a humanoid ballbot with an omni-wheel drive mechanism. The repository contains the robot model, mesh assets, two Gymnasium environments, and a shared PPO training entry point.
 
 The robot model is defined in `asRoBallet.xml`. It includes the main body, upper-body links, a ball, three omni-wheel actuators, onboard sensor sites, and STL mesh assets under `meshes/`.
+
+<p align="center">
+  <img src="SupplementaryVideo-S2.gif" width="45%" alt="First demo">
+  <img src="SupplementaryVideo-S3.gif" width="45%" alt="Second demo">
+</p>
+
+## [asMagic App](https://apps.apple.com/us/app/asmagic/id6661033548)
+
+This work adopts [**asMagic**](https://apps.apple.com/us/app/asmagic/id6661033548), a mobile app that transforms iOS devices into high-performing perception stack for real-time perception, communication, simulation, and interaction with advanced robotics. Feel free to [download the app](https://apps.apple.com/us/app/asmagic/id6661033548) for a 3D inspection of asRoBallet's design, which is reconfigured from the original design of asOverDog. Each asRoBallet only requires a single iPhone Pro series to achieve full-stack perception, which can be wirelessly interacted using another iPhone. Please refer to [the documentation](https://doc.ancoraspring.com) for further details on using asMagic for your project.
+
+<p align="center">
+    <img src="asMagic-QRCode.avif" width="20%">
+    <img src="asMagic-ScreenShot.avif" width="28%">
+    <img src="SupplementaryVideo-S1.gif" width="35%">
+</p>
 
 ## Project Structure
 
@@ -99,3 +118,15 @@ tensorboard --logdir logs
 - The environments use `frame_skip=5`, so one policy step advances `0.01` seconds of simulation time.
 - Both tasks control only the first three actuators, corresponding to the three omni-wheel motors.
 - Head and arm joints are position-controlled by the XML actuators and randomized during some resets.
+
+## Citation
+
+```
+@inproceedings{Wan2026asRoBallet,
+  title={\href{https://arxiv.org/abs/2604.24916}
+    {asRoBallet: Closing the Sim2Real Gap via Friction-Aware Reinforcement Learning for Underactuated Spherical Dynamics}},
+  author={Fang Wan and Guangyi Huang and Tianyu Wu and Zishang Zhang and Bangchao Huang and Haoran Sun and Mingdong Chen and Chaoyang Song},
+  booktitle={Robotics: Science and Systems (RSS)},
+  year={2026}
+}
+```
