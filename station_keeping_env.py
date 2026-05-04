@@ -101,7 +101,7 @@ class MagicBallEnv(gym.Env):
         self.data.qpos[0:2] = self.rng.uniform(-0.5, 0.5, size=2)
 
         # Randomize initial roll pitch yaw
-        roll, pitch = self.rng.uniform(-5/180*3.1415, 5/180*3.1415, size=2)
+        roll, pitch = 0, 0 
         yaw = self.rng.uniform(-np.pi/6, np.pi/6)
         quat = R.from_euler('xyz', [roll, pitch, yaw]).as_quat()
         quat_mujoco = np.roll(quat, 1)  # reorder [x,y,z,w] → [w,x,y,z]
@@ -222,7 +222,7 @@ class MagicBallEnv(gym.Env):
 
     def rand_dynamics(self):
         self.model.pair_friction[0][0] = self.rng.uniform(low=0.6, high=1.2)
-        self.model.pair_friction[0][1] = self.rng.uniform(low=0.01, high=0.5)
+        self.model.pair_friction[0][1] = self.model.pair_friction[0][0]
         
         # Scale static friction.
         self.model.dof_frictionloss[ACTUATOR_INDEX] = self.rng.uniform(low=0.08, high=0.12, size=(3,))

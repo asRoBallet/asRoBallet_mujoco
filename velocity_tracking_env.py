@@ -220,7 +220,7 @@ class MagicBallEnv(gym.Env):
 
     def rand_dynamics(self):
         self.model.pair_friction[0][0] = self.rng.uniform(low=0.6, high=1.2)
-        self.model.pair_friction[0][1] = self.rng.uniform(low=0.01, high=0.5)
+        self.model.pair_friction[0][1] = self.model.pair_friction[0][0]
         
         # Scale static friction.
         self.model.dof_frictionloss[ACTUATOR_INDEX] = self.rng.uniform(low=0.08, high=0.12, size=(3,))

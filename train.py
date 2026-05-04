@@ -13,7 +13,7 @@ TASKS = {
     },
     "station_keeping": {
         "env_module": "station_keeping_env",
-        "default_timesteps": 8_000_000,
+        "default_timesteps": 4_000_000,
     },
 }
 

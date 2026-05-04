@@ -55,7 +55,7 @@ This work adopts [**asMagic**](https://apps.apple.com/us/app/asmagic/id666103354
 - Action space: 3 continuous wheel commands.
 - Observation size: 17.
 - Default episode length: 2000 environment steps.
-- Default training horizon: 8,000,000 PPO timesteps.
+- Default training horizon: 4,000,000 PPO timesteps.
 - Reward terms include position/yaw retention, roll-pitch penalty, angular-velocity penalty, action energy, and action-rate penalty.
 
 ## Installation
@@ -111,6 +111,64 @@ TensorBoard can be launched with:
 ```bash
 tensorboard --logdir logs
 ```
+
+## Contact Friction Parameters
+MuJoCo uses different friction layouts for `geom` defaults and explicit contact `pair` definitions.
+
+The ball-floor contact is defined in `asRoBallet.xml` by the named contact pair:
+
+```xml
+<pair name="ball_floor" geom1="ball-v1_geom" geom2="floor"
+      condim="6" friction="1.0 1.0 0.01"
+      solimp="0.85 0.99 0.003" />
+```
+
+The friction vector is:
+
+```text
+friction="mu_slide_1 mu_slide_2 mu_torsion mu_roll_1 mu_roll_2"
+```
+
+- `mu_slide_1`, `mu_slide_2`: tangential Coulomb friction coefficients for the two sliding directions.
+- `mu_torsion`: resistance to spinning about the contact normal. With `condim="6"`, this term is enabled and affects yaw-like spin at the contact patch.
+- `mu_roll_1`, `mu_roll_2`: rolling-friction coefficients for the two rolling directions.
+
+`condim="6"` enables sliding, torsional, and rolling friction at the ball-floor contact. The default XML values are:
+
+```text
+mu_slide_1 = 1.0
+mu_slide_2 = 1.0
+mu_torsion = 0.01
+mu_roll_1  = inherited/default value
+mu_roll_2  = inherited/default value
+```
+
+The ball-floor contact is defined in `asRoBallet.xml` by the `geom`
+```xml
+<default class="rubber">
+    <geom rgba="0.2 0.2 0.2 1" condim="3" friction="1 0.005 0.0001" priority="1" solimp="0.85 0.99 0.003"/>
+</default>
+```
+The friction vector is:
+
+```text
+friction="mu_slide mu_torsion mu_roll"
+```
+
+During training, both environments randomize the first contact pair in `rand_dynamics()`:
+
+```python
+self.model.pair_friction[0][0] = self.rng.uniform(low=0.6, high=1.2)
+self.model.pair_friction[0][1] = self.model.pair_friction[0][0]
+```
+
+The wheel joint dry-friction losses are also randomized:
+
+```python
+self.model.dof_frictionloss[ACTUATOR_INDEX] = self.rng.uniform(low=0.08, high=0.12, size=(3,))
+```
+
+This randomizes drivetrain resistance for the three omni-wheel joints.
 
 ## Notes
 

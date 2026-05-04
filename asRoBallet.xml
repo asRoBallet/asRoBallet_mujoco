@@ -28,7 +28,7 @@
     </default>
 
     <contact>
-        <pair name="ball_floor" geom1="ball-v1_geom" geom2="floor" condim="6" friction="1.0 1 0.01" solimp="0.85 0.99 0.003" />
+        <pair name="ball_floor" geom1="ball-v1_geom" geom2="floor" condim="6" friction="1.0 1.0 0.01" solimp="0.85 0.99 0.003" />
     </contact>
 
     <asset>
