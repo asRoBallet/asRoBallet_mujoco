@@ -101,7 +101,7 @@ class MagicBallEnv(gym.Env):
         self.data.qpos[0:2] = self.rng.uniform(-0.5, 0.5, size=2)
 
         # Randomize initial roll pitch yaw
-        roll, pitch = 0, 0 
+        roll, pitch = self.rng.uniform(-5/180*3.1415, 5/180*3.1415, size=2)
         yaw = self.rng.uniform(-np.pi/6, np.pi/6)
         quat = R.from_euler('xyz', [roll, pitch, yaw]).as_quat()
         quat_mujoco = np.roll(quat, 1)  # reorder [x,y,z,w] → [w,x,y,z]
