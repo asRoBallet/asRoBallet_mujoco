@@ -1,0 +1,18 @@
+# Simulation and environments
+gymnasium==1.2.3
+numpy==2.4.6
+mujoco==3.11.0
+glfw==2.10.0
+scipy==1.17.1
+mujoco-usd-converter==0.5.0
+
+# Reinforcement learning, logging, and progress display
+stable-baselines3==2.8.0
+tensorboard==2.20.0
+tqdm==4.67.3
+rich==15.0.0
+
+# ONNX export and validation
+onnx==1.22.0
+onnxruntime==1.28.0
+onnxscript==0.7.1

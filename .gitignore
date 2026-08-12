@@ -1,2 +1,43 @@
-logs/
+# Python bytecode and caches
 __pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Coverage reports
+.coverage
+.coverage.*
+htmlcov/
+
+# Packaging artifacts
+build/
+dist/
+*.egg-info/
+
+# Local Python environments
+.venv/
+venv/
+env/
+.conda/
+
+# Jupyter temporary files
+.ipynb_checkpoints/
+
+# Editors and operating systems
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Runtime and training artifacts
+logs/
+*.log
+imgui.ini
+
+# Local archives and agent artifacts
+robots/.archive/
+robots/usd/
+.superpowers/
