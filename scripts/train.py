@@ -203,6 +203,18 @@ def parse_args():
     )
     parser.add_argument("--device", default="cuda", help="PPO device.")
     parser.add_argument(
+        "--activation",
+        choices=("elu", "tanh"),
+        default="tanh",
+        help="Policy/value network activation function.",
+    )
+    parser.add_argument(
+        "--vec-env",
+        choices=("dummy", "subproc"),
+        default="dummy",
+        help="Vectorized environment backend.",
+    )
+    parser.add_argument(
         "--render-mode",
         choices=("none", "human"),
         default="none",
@@ -250,6 +262,7 @@ def main():
     )
     from stable_baselines3.common.env_util import make_vec_env
     from stable_baselines3.common.logger import configure
+    from stable_baselines3.common.vec_env import DummyVecEnv, SubprocVecEnv
 
     RewardPartsLogger, SaveBestOnRolloutEpRewMean = make_callback_classes(BaseCallback)
     env_cls = load_env_class(args.task)
@@ -262,6 +275,7 @@ def main():
         n_envs=args.n_envs,
         seed=args.seed,
         monitor_dir=str(paths.monitor_dir),
+        vec_env_cls={"dummy": DummyVecEnv, "subproc": SubprocVecEnv}[args.vec_env],
     )
 
     checkpoint_callback = CheckpointCallback(
@@ -278,10 +292,11 @@ def main():
         checkpoint_callback,
     ])
 
+    activation_fn = {"elu": nn.ELU, "tanh": nn.Tanh}[args.activation]
     model = PPO(
         "MlpPolicy",
         env,
-        policy_kwargs={"activation_fn": nn.ELU},
+        policy_kwargs={"activation_fn": activation_fn},
         clip_range=0.1,
         target_kl=0.02,
         verbose=0,
@@ -292,7 +307,10 @@ def main():
     )
     model.set_logger(configure(str(paths.tensorboard_dir), ["tensorboard"]))
 
-    print(f"Training task={args.task} for {total_timesteps:,} timesteps")
+    print(
+        f"Training task={args.task} for {total_timesteps:,} timesteps "
+        f"activation={args.activation} vec_env={args.vec_env}"
+    )
     print(f"Run directory: {paths.run_dir}")
     start = time.time()
     learn_and_save(

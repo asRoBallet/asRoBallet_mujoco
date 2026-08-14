@@ -37,81 +37,9 @@ class DeterministicPolicy(nn.Module):
 def validate_policy_compatibility(policy):
     if policy.squash_output:
         raise ValueError(
-            "warp_nn export does not support squashed SB3 policies because they "
-            "require a Tanh output. Retrain with squash_output=False."
+            "ONNX export does not support squashed SB3 policies. Retrain with "
+            "squash_output=False."
         )
-
-    unsupported = {
-        type(module).__name__
-        for module in policy.mlp_extractor.policy_net.modules()
-        if not isinstance(module, (nn.Sequential, nn.Linear, nn.ELU))
-    }
-    if unsupported:
-        names = ", ".join(sorted(unsupported))
-        raise ValueError(
-            "Checkpoint actor uses unsupported modules for warp_nn: "
-            f"{names}. Existing Tanh policies cannot be converted exactly; "
-            "retrain them with the current ELU training configuration."
-        )
-
-    linear_layers = [
-        module
-        for module in policy.mlp_extractor.policy_net.modules()
-        if isinstance(module, nn.Linear)
-    ]
-    linear_layers.append(policy.action_net)
-    if any(
-        not isinstance(layer, nn.Linear) or layer.bias is None
-        for layer in linear_layers
-    ):
-        raise ValueError("warp_nn requires every policy Gemm layer to have a bias.")
-
-
-def _attribute_int(node, name, default):
-    for attribute in node.attribute:
-        if attribute.name == name:
-            return int(onnx.helper.get_attribute_value(attribute))
-    return default
-
-
-def _tensor_ranks(model):
-    inferred = onnx.shape_inference.infer_shapes(model)
-    ranks = {}
-    values = (
-        list(inferred.graph.input)
-        + list(inferred.graph.value_info)
-        + list(inferred.graph.output)
-    )
-    for value in values:
-        tensor_type = value.type.tensor_type
-        if tensor_type.HasField("shape"):
-            ranks[value.name] = len(tensor_type.shape.dim)
-    for initializer in inferred.graph.initializer:
-        ranks[initializer.name] = len(initializer.dims)
-    return ranks
-
-
-def validate_warp_nn_graph(model):
-    """Validate the subset emitted for warp_nn.runtime.OnnxRuntime."""
-    allowed = {"Gemm", "Elu"}
-    unsupported = sorted({node.op_type for node in model.graph.node} - allowed)
-    if unsupported:
-        raise ValueError(
-            "ONNX graph contains operators unsupported by warp_nn: "
-            + ", ".join(unsupported)
-        )
-
-    ranks = _tensor_ranks(model)
-    for node in model.graph.node:
-        if node.op_type == "Gemm":
-            if len(node.input) != 3:
-                raise ValueError("warp_nn requires every Gemm node to have a bias input.")
-            if _attribute_int(node, "transB", 0) != 1:
-                raise ValueError("warp_nn requires Gemm transB=1.")
-            if any(ranks.get(name) != 2 for name in node.input[:2]):
-                raise ValueError("warp_nn requires two-dimensional Gemm inputs.")
-        elif node.op_type == "Elu" and ranks.get(node.input[0]) != 2:
-            raise ValueError("warp_nn requires two-dimensional Elu tensors.")
 
 
 def operator_counts(output_path):
@@ -156,7 +84,12 @@ def parse_args():
     return args
 
 
-def export_policy(model_path, output_path, opset_version=18, force=False):
+def export_policy(
+    model_path,
+    output_path,
+    opset_version=18,
+    force=False,
+):
     from stable_baselines3 import PPO
 
     model_path = Path(model_path)
@@ -221,7 +154,6 @@ def export_policy(model_path, output_path, opset_version=18, force=False):
 
         exported = onnx.load(temporary_path)
         onnx.checker.check_model(exported)
-        validate_warp_nn_graph(exported)
         os.replace(temporary_path, output_path)
         if external_data_path.exists():
             external_data_path.unlink()

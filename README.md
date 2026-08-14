@@ -23,32 +23,6 @@ This work adopts [**asMagic**](https://apps.apple.com/us/app/asmagic/id666103354
     <img src="assets/SupplementaryVideo-S1.gif" width="35%">
 </p>
 
-## Project Structure
-
-```text
-.
-├── assets/                     # Images, GIFs, and other README media
-├── robots/                     # Robot descriptions and mesh assets
-│   ├── mjcf/
-│   │   ├── asRoBallet.xml      # Pure MuJoCo robot model
-│   │   └── scene.xml           # Training/evaluation scene including floor/contact
-│   ├── usd/                    # Generated OpenUSD Atomic Component
-│   ├── .archive/               # Previous robot model revisions
-│   └── meshes/                 # STL mesh assets referenced by the MJCF
-├── envs/
-│   ├── base.py                 # Shared MuJoCo environment lifecycle
-│   ├── velocity_tracking.py    # Velocity-tracking Gymnasium environment
-│   └── station_keeping.py      # Station-keeping Gymnasium environment
-├── scripts/
-│   ├── train.py                # Shared PPO training script for both tasks
-│   ├── evaluate.py             # Headless multi-episode policy evaluation
-│   ├── play.py                 # Real-time MuJoCo policy playback
-│   ├── export_onnx.py          # Export SB3 policies to ONNX
-│   └── export_usd.py           # Convert MJCF assets to OpenUSD
-├── README.md
-└── LICENSE
-```
-
 ## Tasks
 
 ### Velocity Tracking
@@ -73,15 +47,36 @@ This work adopts [**asMagic**](https://apps.apple.com/us/app/asmagic/id666103354
 
 ## Installation
 
-The repository is tested with Python 3.11 in the `asroballet` Conda environment.
-
-Create the environment and install all runtime, training, and logging dependencies:
+The repository is tested with Python 3.11 and PyTorch 2.12.0 in the `asroballet` Conda environment.
+Create the environment first:
 
 ```bash
 conda create -n asroballet python=3.11
 conda activate asroballet
+```
+
+Install the PyTorch build for the target machine. Choose one of the following commands:
+
+```bash
+# NVIDIA GPU with a compatible CUDA 13.0 driver
+pip install torch==2.12.0 --index-url https://download.pytorch.org/whl/cu130
+
+# CPU only
+pip install torch==2.12.0 --index-url https://download.pytorch.org/whl/cpu
+```
+
+For other supported CUDA versions, use the command from the
+[official PyTorch installation selector](https://docs.pytorch.org/get-started/locally/).
+
+Then install the remaining runtime, training, and logging dependencies:
+
+```bash
 pip install -r requirements.txt
 ```
+
+Stable-Baselines3 accepts `torch>=2.3,<3.0`, so pip reuses the selected PyTorch installation
+instead of replacing it. A different torch version is installed only when the existing version
+does not satisfy the dependency constraints or pip is explicitly asked to upgrade or reinstall it.
 
 ## Training
 
@@ -197,32 +192,6 @@ evaluation:
 ```bash
 python scripts/evaluate.py velocity_tracking --stochastic
 ```
-
-## ONNX Export
-
-```bash
-python scripts/export_onnx.py velocity_tracking
-python scripts/export_onnx.py station_keeping
-```
-
-The exporter uses the newest `best_model.zip` by default and writes `best_model.onnx` beside it.
-Use `--model-path`, `--output-path`, and `--force` to override these paths. The ONNX interface is
-`observations: float32[batch, 16|17] -> actions: float32[batch, 3]`. New policies use ELU and the
-exported graph contains only two `warp_nn.runtime.OnnxRuntime`-compatible operators: `Gemm` and
-`Elu`. Apply the action-space clamp in the runtime before sending actions to the robot. Existing
-checkpoints trained with Tanh cannot be converted exactly and must be retrained. Model structure
-and weights are stored in a single `.onnx` file.
-
-## OpenUSD Export
-
-```bash
-python scripts/export_usd.py
-```
-
-This converts `robots/mjcf/asRoBallet.xml` with Newton's `mujoco-usd-converter` and writes the
-self-contained Atomic Component to `robots/usd/asRoBallet.usda`. Use `--force` to
-replace an existing export. Converter version 0.5.0 exports geometry, materials, bodies,
-collisions, sites, joints, and actuators, but does not currently export MJCF sensors.
 
 ## Playback
 
