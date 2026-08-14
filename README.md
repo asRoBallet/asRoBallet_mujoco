@@ -74,10 +74,6 @@ Then install the remaining runtime, training, and logging dependencies:
 pip install -r requirements.txt
 ```
 
-Stable-Baselines3 accepts `torch>=2.3,<3.0`, so pip reuses the selected PyTorch installation
-instead of replacing it. A different torch version is installed only when the existing version
-does not satisfy the dependency constraints or pip is explicitly asked to upgrade or reinstall it.
-
 ## Training
 
 `scripts/train.py` is the shared PPO entry point for both tasks:
