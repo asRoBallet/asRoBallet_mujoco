@@ -2,6 +2,7 @@ import argparse
 from dataclasses import dataclass
 from datetime import datetime
 import importlib
+import json
 import os
 from pathlib import Path
 import sys
@@ -35,6 +36,32 @@ class RunPaths:
     tensorboard_dir: Path
     monitor_dir: Path
     checkpoint_dir: Path
+
+
+def write_run_config(run_dir, args, total_timesteps):
+    config = {
+        "task": args.task,
+        "xml_file": args.xml_file,
+        "algorithm": "PPO",
+        "policy": "MlpPolicy",
+        "activation": args.activation,
+        "total_timesteps": total_timesteps,
+        "n_envs": args.n_envs,
+        "seed": args.seed,
+        "batch_size": args.batch_size,
+        "clip_range": 0.1,
+        "target_kl": 0.02,
+        "checkpoint_freq": args.checkpoint_freq,
+        "device": args.device,
+        "vec_env": args.vec_env,
+        "render_mode": args.render_mode,
+    }
+    config_path = Path(run_dir) / "config.json"
+    config_path.write_text(
+        json.dumps(config, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    return config_path
 
 
 def positive_int(value):
@@ -306,12 +333,14 @@ def main():
         seed=args.seed,
     )
     model.set_logger(configure(str(paths.tensorboard_dir), ["tensorboard"]))
+    config_path = write_run_config(paths.run_dir, args, total_timesteps)
 
     print(
         f"Training task={args.task} for {total_timesteps:,} timesteps "
         f"activation={args.activation} vec_env={args.vec_env}"
     )
     print(f"Run directory: {paths.run_dir}")
+    print(f"Run configuration: {config_path}")
     start = time.time()
     learn_and_save(
         model,

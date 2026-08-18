@@ -74,10 +74,6 @@ Then install the remaining runtime, training, and logging dependencies:
 pip install -r requirements.txt
 ```
 
-Stable-Baselines3 accepts `torch>=2.3,<3.0`, so pip reuses the selected PyTorch installation
-instead of replacing it. A different torch version is installed only when the existing version
-does not satisfy the dependency constraints or pip is explicitly asked to upgrade or reinstall it.
-
 ## Training
 
 `scripts/train.py` is the shared PPO entry point for both tasks:
@@ -86,15 +82,6 @@ does not satisfy the dependency constraints or pip is explicitly asked to upgrad
 python scripts/train.py velocity_tracking
 python scripts/train.py station_keeping
 ```
-
-The default configuration for either task is:
-
-- `robots/mjcf/scene.xml`
-- 8 parallel environments
-- 4,000,000 global environment transitions
-- seed `3407`
-- CUDA execution
-- a periodic checkpoint every 100,000 global transitions
 
 Only one full training job should normally use a single GPU at a time. On a machine without a
 CUDA-capable PyTorch installation, select the CPU explicitly:
@@ -127,6 +114,7 @@ Each invocation creates an isolated timestamped run:
 
 ```text
 logs/<task>/<YYYY-MM-DD_HH-MM-SS>/
+├── config.json
 ├── tensorboard/
 │   └── events.out.tfevents.*
 ├── monitor/
@@ -143,18 +131,7 @@ logs/<task>/<YYYY-MM-DD_HH-MM-SS>/
 - `final_model.zip` is written only after training finishes normally.
 
 All three are native Stable-Baselines3 archives and can be loaded with `PPO.load()`. Monitor CSV
-files contain episode returns and lengths for each parallel environment. TensorBoard also records
-PPO metrics and the environment reward components:
-
-```bash
-tensorboard --logdir logs
-```
-
-Use the CLI help for the complete option list:
-
-```bash
-python scripts/train.py --help
-```
+files contain episode returns and lengths for each parallel environment.
 
 ## Evaluation
 
