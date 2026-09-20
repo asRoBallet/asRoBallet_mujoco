@@ -189,19 +189,19 @@ def make_callback_classes(base_callback_cls):
                             value = float(value)
                         except (TypeError, ValueError):
                             continue
-                        self.logger.record(f"reward_parts/{key}", value)
+                        self.logger.record_mean(f"reward_parts/{key}", value)
                         self._ep_sums[key][i] += value
 
                 self._ep_lens[i] += 1
 
                 if dones[i]:
                     for key in self._keys:
-                        self.logger.record(
+                        self.logger.record_mean(
                             f"episode_parts/{key}",
                             float(self._ep_sums[key][i]),
                         )
                         self._ep_sums[key][i] = 0.0
-                    self.logger.record("episode/length", int(self._ep_lens[i]))
+                    self.logger.record_mean("episode/length", int(self._ep_lens[i]))
                     self._ep_lens[i] = 0
 
             return True

@@ -159,6 +159,32 @@ class BaseAsRoBalletEnv(gym.Env):
         self.ball_body_id = _required_id(
             self.model, mujoco.mjtObj.mjOBJ_BODY, "ball_link"
         )
+        self.ball_free_joint_id = None
+        if self.model.body_jntnum[self.ball_body_id] == 1:
+            ball_joint_id = self.model.body_jntadr[self.ball_body_id]
+            if self.model.jnt_type[ball_joint_id] == mujoco.mjtJoint.mjJNT_FREE:
+                self.ball_free_joint_id = ball_joint_id
+                # Preserve the XML's reference ball pose relative to the torso.
+                reference = mujoco.MjData(self.model)
+                mujoco.mj_kinematics(self.model, reference)
+                base_rotation = reference.xmat[self.robot_base_id].reshape(3, 3)
+                self.ball_reset_offset = base_rotation.T @ (
+                    reference.xpos[self.ball_body_id]
+                    - reference.xpos[self.robot_base_id]
+                )
+                self.ball_reset_rotation = base_rotation.T @ reference.xmat[
+                    self.ball_body_id
+                ].reshape(3, 3)
+        # Include the base subtree, excluding the ball and any descendants.
+        # This selects the same robot bodies when the ball has its own free joint.
+        robot_body_ids = []
+        for body_id in range(1, self.model.nbody):
+            ancestor = body_id
+            while ancestor not in (0, self.robot_base_id, self.ball_body_id):
+                ancestor = self.model.body_parentid[ancestor]
+            if ancestor == self.robot_base_id:
+                robot_body_ids.append(body_id)
+        self.robot_com_body_ids = np.array(robot_body_ids, dtype=np.int32)
         self.ball_velocity_slice = _required_sensor_slice(
             self.model, "ball_vel", expected_dim=3
         )
@@ -213,9 +239,13 @@ class BaseAsRoBalletEnv(gym.Env):
             self.data.qpos[base_quat_slice], scalar_first=True
         )
         self.rpy = rotation.as_euler("xyz")
+        masses = self.model.body_mass[self.robot_com_body_ids]
+        body_com_world = np.sum(
+            masses[:, None] * self.data.xipos[self.robot_com_body_ids], axis=0
+        ) / masses.sum()
+        # Robot-only COM in meters, relative to the base origin in body axes.
         self.COM = self.data.xmat[self.robot_base_id].reshape(3, 3).T @ (
-            self.data.subtree_com[self.robot_base_id]
-            - self.data.subtree_com[self.ball_body_id]
+            body_com_world - self.data.xpos[self.robot_base_id]
         )
 
     def _get_obs(self):
@@ -227,7 +257,40 @@ class BaseAsRoBalletEnv(gym.Env):
     def _compute_reward(self, action):
         raise NotImplementedError
 
+    def _reset_independent_ball(self):
+        if self.ball_free_joint_id is None:
+            return
+        ball_qpos_adr = self.model.jnt_qposadr[self.ball_free_joint_id]
+        ball_dof_adr = self.model.jnt_dofadr[self.ball_free_joint_id]
+        base_rotation = R.from_quat(
+            self.data.qpos[self.base_qpos_adr + 3 : self.base_qpos_adr + 7],
+            scalar_first=True,
+        ).as_matrix()
+        self.data.qpos[ball_qpos_adr : ball_qpos_adr + 3] = (
+            self.data.qpos[self.base_qpos_adr : self.base_qpos_adr + 3]
+            + base_rotation @ self.ball_reset_offset
+        )
+        self.data.qpos[ball_qpos_adr + 3 : ball_qpos_adr + 7] = R.from_matrix(
+            base_rotation @ self.ball_reset_rotation
+        ).as_quat(scalar_first=True)
+
+        # Match a ball attached to the moving torso with zero relative spin.
+        # Free-joint linear velocity is world-frame; angular velocity is local.
+        base_omega = self.data.qvel[self.base_dof_adr + 3 : self.base_dof_adr + 6]
+        self.data.qvel[ball_dof_adr : ball_dof_adr + 3] = (
+            self.data.qvel[self.base_dof_adr : self.base_dof_adr + 3]
+            + base_rotation @ np.cross(base_omega, self.ball_reset_offset)
+        )
+        self.data.qvel[ball_dof_adr + 3 : ball_dof_adr + 6] = (
+            self.ball_reset_rotation.T @ base_omega
+        )
+
     def reset(self, *, seed=None, options=None):
+        # Training retains the wider initial-state distribution. Evaluation can
+        # start upright without linear motion, keeping the other randomizations.
+        reset_profile = (options or {}).get("reset_profile", "training")
+        if reset_profile not in ("training", "evaluation"):
+            raise ValueError(f"Unknown reset profile: {reset_profile!r}")
         super().reset(seed=seed)
         self.rng = self.np_random
         self.current_step = 0
@@ -236,20 +299,24 @@ class BaseAsRoBalletEnv(gym.Env):
         self._reset_task_state()
         self.last_action = np.zeros(3, dtype=np.float64)
 
-        roll, pitch = self.rng.uniform(
-            -INITIAL_TILT_LIMIT_RAD,
-            INITIAL_TILT_LIMIT_RAD,
-            size=2,
-        )
+        if reset_profile == "evaluation":
+            roll, pitch = 0.0, 0.0
+        else:
+            roll, pitch = self.rng.uniform(
+                -INITIAL_TILT_LIMIT_RAD,
+                INITIAL_TILT_LIMIT_RAD,
+                size=2,
+            )
         yaw = self.rng.uniform(*self.INITIAL_YAW_RANGE)
         quat = R.from_euler("xyz", [roll, pitch, yaw]).as_quat()
         self.data.qpos[self.base_qpos_adr + 3 : self.base_qpos_adr + 7] = np.roll(
             quat, 1
         )
 
-        self.data.qvel[self.base_dof_adr : self.base_dof_adr + 2] = self.rng.uniform(
-            low=-0.5, high=0.5, size=2
-        )
+        if reset_profile == "training":
+            self.data.qvel[self.base_dof_adr : self.base_dof_adr + 2] = self.rng.uniform(
+                low=-0.5, high=0.5, size=2
+            )
         self.data.qvel[
             self.base_dof_adr + 3 : self.base_dof_adr + 6
         ] = self.rng.uniform(low=-0.1, high=0.1, size=3)
@@ -281,6 +348,7 @@ class BaseAsRoBalletEnv(gym.Env):
         self.data.qpos[self.upper_qpos_indices] = upper_targets
         self.data.ctrl[self.upper_actuator_ids] = upper_targets
 
+        self._reset_independent_ball()
         self.rand_dynamics()
         mujoco.mj_forward(self.model, self.data)
         observation = self._get_obs()
@@ -295,9 +363,12 @@ class BaseAsRoBalletEnv(gym.Env):
         for _ in range(self.frame_skip):
             mujoco.mj_step(self.model, self.data)
 
-        obs = self._get_obs()
+        # mj_step integrates qpos/qvel after computing sensors and transforms.
+        mujoco.mj_forward(self.model, self.data)
+        self._update_derived_state()
         reward, reward_parts = self._compute_reward(action)
-        self.last_action = action
+        self.last_action = action.copy()
+        obs = self._get_obs()
         terminated = bool(
             abs(self.rpy[0]) > TERMINATION_TILT_LIMIT_RAD
             or abs(self.rpy[1]) > TERMINATION_TILT_LIMIT_RAD
